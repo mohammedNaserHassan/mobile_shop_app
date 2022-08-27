@@ -28,19 +28,17 @@ class ResetPassScreen extends StatelessWidget {
       body: Consumer<MobileProvider>(
         builder: (context, provider, index) => Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 80.h,
-              ),
               Text(
                 'Reset password',
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
               ),
               Container(
                 margin: EdgeInsets.only(top: 16.h, bottom: 33.h),
                 child: Text(
                   'Enter the email associated with your account and \n we’ll send an email with instructions to reset your\n password!',
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.grey,fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -16,7 +16,6 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
       body: Consumer<MobileProvider>(builder: (context, provider, index) {
         return Container(
           margin: EdgeInsets.symmetric(
@@ -26,13 +25,14 @@ class SignupScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Spacer(),
               MixTextWidget(text1: 'Sign', text2: 'Up'),
               Text(
                 'Create a new account!',
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
-                    ?.copyWith(fontSize: 24.sp),
+                    ?.copyWith(fontSize: 18.sp,color: Colors.grey),
               ),
               SizedBox(
                 height: 70.h,
@@ -95,9 +95,7 @@ class SignupScreen extends StatelessWidget {
               ),
               ButtonWidget(
                   title: 'Sign Up', color: black, function: provider.register),
-              SizedBox(
-                height: 90.h,
-              ),
+              Spacer(),
               RowLineWidget(
                   function: LoginScreen(),
                   text1: 'Have an account?',

@@ -30,13 +30,13 @@ class CreatePassScreen extends StatelessWidget {
             children: [
               Text(
                 'Create new password',
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 25,fontWeight: FontWeight.bold),
               ),
               Container(
                 margin:  EdgeInsets.only(top: 16.h, bottom: 33.h),
                 child: Text(
                   'Your new password must be different from\n previous used passwords.',
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.grey,fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -50,7 +50,7 @@ class CreatePassScreen extends StatelessWidget {
                     onTap: (){
                       provider.changeobscure();
                     },
-                    child:!provider.obscure? SvgPicture.asset('Assets/Icons/Hide.svg',fit: BoxFit.scaleDown,):Icon(Icons.remove_red_eye_outlined,color: Grey,)),
+                    child:!provider.obscure? SvgPicture.asset('Assets/Icons/Hide.svg',fit: BoxFit.scaleDown,):Icon(Icons.remove_red_eye_outlined,color: grey,)),
                 bottom: 0.h,
                 title: 'Password',
                 prefix: 'Assets/Icons/Lock.svg',
@@ -76,7 +76,7 @@ class CreatePassScreen extends StatelessWidget {
               ),
               ButtonWidget(
                 title: 'Confirm',
-                color: gPrimary,
+                color: green,
                 function: provider.confirmPassword,
               ),
             ],

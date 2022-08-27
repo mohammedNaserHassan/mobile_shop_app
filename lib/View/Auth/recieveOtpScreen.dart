@@ -18,10 +18,8 @@ class recieveOtpScreen extends StatelessWidget {
       body: Consumer<MobileProvider>(
         builder: (context, provider, index) => Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-               SizedBox(
-                height: 80.h,
-              ),
               CircleAvatar(
                   backgroundColor: const Color(0xffEBF5EA),
                   radius: 100.r,
@@ -29,7 +27,7 @@ class recieveOtpScreen extends StatelessWidget {
                     'Assets/Images/otp.png',
                   )),
                SizedBox(
-                height: 44.h,
+                height: 45.h,
               ),
               Text(
                 'Phone Verification',

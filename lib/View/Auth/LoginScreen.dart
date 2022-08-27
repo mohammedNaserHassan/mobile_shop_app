@@ -18,14 +18,14 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
       body: Consumer<MobileProvider>(
         builder: (context,provider,index) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Spacer(),
               Container(
-                  margin: EdgeInsets.only(top: 130.h,left: 40.h,bottom: 35.h),
+                  margin: EdgeInsets.only(left: 40.h,bottom: 30.h),
                   child: MixTextWidget(text1: 'Welcome', text2: 'back!')),
               Center(
                 child: TextFieldWidget(
@@ -56,9 +56,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Center(child: ButtonWidget(title: 'Log in', color: black, function:provider.login)),
-              SizedBox(
-                height: 206,
-              ),
+             Spacer(),
               RowLineWidget(text1: 'Haven’t an account? ', text2: 'Sign up',function: SignupScreen(),)
             ],
           );

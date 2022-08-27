@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class AppRouter {
   AppRouter._();
-
   static AppRouter appRouter = AppRouter._();
   GlobalKey<NavigatorState> navkey = GlobalKey<NavigatorState>();
 

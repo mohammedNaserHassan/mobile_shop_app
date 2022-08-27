@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_shop_app/View/SplashScreen.dart';
+import 'package:mobile_shop_app/View/Features/SplashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class AppFire extends StatelessWidget {
@@ -22,6 +22,7 @@ class AppFire extends StatelessWidget {
             ),
           );
         }
+        // If all Done without problems
         if (snapshot.connectionState == ConnectionState.done) {
           return SplashScreen();
         }

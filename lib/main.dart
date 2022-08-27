@@ -5,10 +5,12 @@ import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -19,18 +21,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MobileProvider>(
         create: (BuildContext context) => MobileProvider(),
-        child: ScreenUtilInit(
-          designSize: const Size(392.7, 834.9),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (context, child) {
-            return MaterialApp(
-              theme: themeData,
-              debugShowCheckedModeBanner: false,
-              home: AppFire(),
-              navigatorKey: AppRouter.appRouter.navkey,
-            );
-          },
+        child: EasyLocalization(
+          supportedLocales: [
+            Locale('en'),
+            Locale('ar'),
+          ],
+          path: 'Assets/Languages',
+          fallbackLocale: Locale(
+            'en',
+          ),
+          child: ScreenUtilInit(
+            designSize: const Size(392.7, 834.9),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) {
+              return MaterialApp(
+                theme: themeData,
+                debugShowCheckedModeBanner: false,
+                home: AppFire(),
+                navigatorKey: AppRouter.appRouter.navkey,
+              );
+            },
+          ),
         ));
   }
 }

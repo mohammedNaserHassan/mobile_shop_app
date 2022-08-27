@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Color green = Colors.green;
+var green = Colors.green;
 var black= const Color(0xff414138);
 var greyBlack = const Color(0xff1F272E);
 var grey = const Color(0xff828282);
@@ -24,11 +24,13 @@ ThemeData themeData = ThemeData(
     selectedItemColor: green,
     unselectedItemColor: grey
   ),
-  textTheme: TextTheme(
-    bodyText1:  const TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 22,),
-    subtitle1:  TextStyle(color: grey, fontSize: 14),
-    bodyText2: const TextStyle(fontWeight: FontWeight.bold,fontSize: 35)
-  )
+ //  textTheme: TextTheme(
+ //    bodyText1:  const TextStyle(
+ //      fontWeight: FontWeight.bold,
+ //      fontSize: 22,),
+ // //   subtitle1:  TextStyle(color: grey, fontSize: 14),
+ //    bodyText2: const TextStyle(fontWeight: FontWeight.bold,fontSize: 35),
+ //    bodySmall: TextStyle(fontSize: 11),
+ //    button: TextStyle(fontSize: 17,)
+ //  )
 );

@@ -29,39 +29,37 @@ class checkEmailScreen extends StatelessWidget {
       body: Consumer<MobileProvider>(
         builder: (context, provider, index) => Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 100.h,
-              ),
               CircleAvatar(
                   backgroundColor: Color(0xffEBF5EA),
                   radius: 100.r,
-                  child: SvgPicture.asset(
-                    'Assets/Icons/email.svg',
+                  child: Image.asset(
+                    'Assets/Images/otp.png',
                   )),
               SizedBox(
                 height: 44.h,
               ),
               Text(
                 'Check your mail',
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 25,fontWeight: FontWeight.bold),
               ),
               Container(
                 margin: EdgeInsets.only(top: 16.h, bottom: 33.h),
                 child: Text(
                   'We have sent a password recover instructions to\n your email.',
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.grey,fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ),
               ButtonWidget(
                 title: 'Open email',
-                color: gPrimary,
+                color: green,
                 function: (){},
               ),
               SizedBox(height: 10.h,),
               ButtonWidget(
-                textColor:bPrimary,
+                textColor:black,
                 title: 'i’ll confirm latter',
                 color:  Color(0xffEBF5EA),
                 function: (){

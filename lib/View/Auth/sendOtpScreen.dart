@@ -13,14 +13,11 @@ class sendOtpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
       body: Consumer<MobileProvider>(
         builder: (context, provider, index) => Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 100.h,
-              ),
               CircleAvatar(
                   backgroundColor: Color(0xffEBF5EA),
                   radius: 100.r,
@@ -47,7 +44,7 @@ class sendOtpScreen extends StatelessWidget {
                   title: 'Phone number', bottom: 24.h, prefix: '', state: true),
               ButtonWidget(
                 title: 'Send OTP',
-                color: gPrimary,
+                color: green,
                 function: provider.sendOtp,
               )
             ],
