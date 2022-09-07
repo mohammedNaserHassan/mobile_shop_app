@@ -8,6 +8,7 @@ class CustomDialog {
 
   static CustomDialog customDialog = CustomDialog._();
 
+
   showCustom(String text, [Function? function]) {
     showDialog(
         context: AppRouter.appRouter.navkey.currentContext!,

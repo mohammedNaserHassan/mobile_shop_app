@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Components/PinputWidget.dart';
+import 'package:mobile_shop_app/Controller/AuthProvider.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
+import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
+import 'package:mobile_shop_app/View/Auth/sendOtpScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,8 +17,10 @@ class recieveOtpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
-      body: Consumer<MobileProvider>(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
+      body: Consumer<AuthProvider>(
         builder: (context, provider, index) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +61,7 @@ class recieveOtpScreen extends StatelessWidget {
                       PinPutWidget(hint: '0',controller:provider.phone4),
                     ],
                   )),
-              ButtonWidget(
+      provider.isVerified?Center(child: CircularProgressIndicator(),):        ButtonWidget(
                 title: 'verify phone number',
                 color: green,
                 function: provider.verifyphonenumber,
@@ -64,9 +69,14 @@ class recieveOtpScreen extends StatelessWidget {
                SizedBox(
                 height: 32.h,
               ),
-              Text(
-                'Edit phone number?',
-                style: Theme.of(context).textTheme.bodySmall,
+              GestureDetector(
+                onTap: (){
+                  AppRouter.appRouter.goWithReplacement(sendOtpScreen());
+                },
+                child: Text(
+                  'Edit phone number?',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ),
               Container(
                 margin:  EdgeInsets.only(top: 20.h),
@@ -76,13 +86,16 @@ class recieveOtpScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.r),
                   color: const Color(0xffEBF5EA),
                 ),
-                child: Center(
-                  child: Text(
-                    'Send again',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5
-                        ?.copyWith(color: green, fontSize: 13.sp),
+                child: GestureDetector(
+                  onTap: (){},
+                  child: Center(
+                    child: Text(
+                      'Send again',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          ?.copyWith(color: green, fontSize: 13.sp),
+                    ),
                   ),
                 ),
               )

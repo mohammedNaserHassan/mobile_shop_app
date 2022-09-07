@@ -3,6 +3,7 @@ import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Components/MixTextWidget.dart';
 import 'package:mobile_shop_app/Components/RowLineWidget.dart';
 import 'package:mobile_shop_app/Components/TextFieldWidget.dart';
+import 'package:mobile_shop_app/Controller/AuthProvider.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
@@ -18,14 +19,14 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Consumer<MobileProvider>(
-        builder: (context,provider,index) {
+      body: Consumer2<AuthProvider,MobileProvider>(
+        builder: (context,provider,mobile,index) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Spacer(),
               Container(
-                  margin: EdgeInsets.only(left: 40.h,bottom: 30.h),
+                  margin: EdgeInsets.only(left: 40.w,bottom: 30.h),
                   child: MixTextWidget(text1: 'Welcome', text2: 'back!')),
               Center(
                 child: TextFieldWidget(
@@ -55,7 +56,11 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(child: ButtonWidget(title: 'Log in', color: black, function:provider.login)),
+              Center(child:
+          provider.isLoading?CircularProgressIndicator():    ButtonWidget(title:  'Log in', color: black, function:(){
+            provider.login();
+            mobile.getProfile();
+          })),
              Spacer(),
               RowLineWidget(text1: 'Haven’t an account? ', text2: 'Sign up',function: SignupScreen(),)
             ],

@@ -6,7 +6,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2)).then((value) => Provider.of<MobileProvider>(context,listen:false).checkEnter());
+    Provider.of<MobileProvider>(context,listen:false).checkEnter();
     return SafeArea(
         child: Container(
           color: Colors.white,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Components/TextFieldWidget.dart';
+import 'package:mobile_shop_app/Controller/AuthProvider.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,7 @@ class sendOtpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Consumer<MobileProvider>(
+      body: Consumer<AuthProvider>(
         builder: (context, provider, index) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,7 +46,7 @@ class sendOtpScreen extends StatelessWidget {
               ButtonWidget(
                 title: 'Send OTP',
                 color: green,
-                function: provider.sendOtp,
+                function: (){},
               )
             ],
           ),

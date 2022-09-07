@@ -1,11 +1,11 @@
-class RegisterUser {
+class Profile {
   bool? status;
   String? message;
   Data? data;
 
-  RegisterUser({this.status, this.message, this.data});
+  Profile({this.status, this.message, this.data});
 
-  RegisterUser.fromJson(Map<String, dynamic> json) {
+  Profile.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
@@ -23,31 +23,45 @@ class RegisterUser {
 }
 
 class Data {
-  String? name;
-  String? phone;
-  String? email;
   int? id;
+  String? name;
+  String? email;
+  String? phone;
   String? image;
+  int? points;
+  int? credit;
   String? token;
 
-  Data({this.name, this.phone, this.email, this.id, this.image, this.token});
+  Data(
+      {this.id,
+        this.name,
+        this.email,
+        this.phone,
+        this.image,
+        this.points,
+        this.credit,
+        this.token});
 
   Data.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    phone = json['phone'];
-    email = json['email'];
     id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    phone = json['phone'];
     image = json['image'];
+    points = json['points'];
+    credit = json['credit'];
     token = json['token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['phone'] = this.phone;
-    data['email'] = this.email;
     data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
     data['image'] = this.image;
+    data['points'] = this.points;
+    data['credit'] = this.credit;
     data['token'] = this.token;
     return data;
   }

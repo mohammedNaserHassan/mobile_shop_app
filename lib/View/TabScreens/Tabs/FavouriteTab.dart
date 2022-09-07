@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_shop_app/Components/FavoriteWidget.dart';
 import 'package:mobile_shop_app/Components/MobileItemWidget.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,11 @@ class FavouriteTab extends StatelessWidget {
       ),
       body: Consumer<MobileProvider>(
         builder: (context, provider, child) {
-          return   GridView(
-            physics: NeverScrollableScrollPhysics(),
+          return provider.favoritesModels.length==0?
+              Center(
+                child: Text('No Favorites Yet \n You can Add from Home Tab',style: Theme.of(context).textTheme.headline6,),
+              )
+              :GridView(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -30,7 +34,7 @@ class FavouriteTab extends StatelessWidget {
               mainAxisSpacing: 5,
               mainAxisExtent: 300,
             ),
-            children: provider.mobiles.map((e) => MobileItemWidget(mobileModel: e)).toList(),);
+            children: provider.favoritesModels.map((e) => FavoriteWidget(mobileModel: e)).toList(),);
         },
       ),
     );

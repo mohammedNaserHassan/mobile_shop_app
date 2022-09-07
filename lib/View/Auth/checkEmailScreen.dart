@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
+import 'package:mobile_shop_app/Controller/AuthProvider.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
@@ -17,7 +18,7 @@ class checkEmailScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         actions: [
-          SvgPicture.asset('Assets/Icons/Danger Circle.svg'),
+          SvgPicture.asset('Assets/Icons/DangerCircle.svg'),
           SizedBox(width: 10.w,)
         ],
         leading: GestureDetector(
@@ -26,7 +27,7 @@ class checkEmailScreen extends StatelessWidget {
             },
             child: SvgPicture.asset('Assets/Icons/Stroke 1.svg',fit: BoxFit.scaleDown,)),
       ),
-      body: Consumer<MobileProvider>(
+      body: Consumer<AuthProvider>(
         builder: (context, provider, index) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +56,7 @@ class checkEmailScreen extends StatelessWidget {
               ButtonWidget(
                 title: 'Open email',
                 color: green,
-                function: (){},
+                function: provider.openEmail,
               ),
               SizedBox(height: 10.h,),
               ButtonWidget(

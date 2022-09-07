@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Components/TextFieldWidget.dart';
+import 'package:mobile_shop_app/Controller/AuthProvider.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
@@ -16,14 +17,15 @@ class CreatePassScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [SvgPicture.asset('Assets/Icons/Danger Circle.svg'),SizedBox(width: 10,)],
+        automaticallyImplyLeading: false,
+        actions: [SvgPicture.asset('Assets/Icons/DangerCircle.svg'),SizedBox(width: 10,)],
         leading: GestureDetector(
             onTap: (){
-              AppRouter.appRouter.goWithReplacement(checkEmailScreen());
+            AppRouter.appRouter.back();
             },
             child: SvgPicture.asset('Assets/Icons/Stroke 1.svg',fit: BoxFit.scaleDown,)),
       ),
-      body: Consumer<MobileProvider>(
+      body: Consumer<AuthProvider>(
         builder: (context, provider, index) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +76,7 @@ class CreatePassScreen extends StatelessWidget {
                 title: 'Confirm password',
                 prefix: 'Assets/Icons/Lock.svg',
               ),
-              ButtonWidget(
+         provider.isConform?Center(child: CircularProgressIndicator(),):     ButtonWidget(
                 title: 'Confirm',
                 color: green,
                 function: provider.confirmPassword,

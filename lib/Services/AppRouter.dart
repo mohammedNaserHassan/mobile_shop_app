@@ -19,11 +19,8 @@ class AppRouter {
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => widget,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(-1, 0),
-              end: Offset.zero,
-            ).animate(animation),
+          return FadeTransition(
+            opacity: animation,
             child: child,
           );
         },
@@ -36,6 +33,11 @@ class AppRouter {
   goWithReplacement(Widget widget) {
     navkey.currentState
         ?.pushReplacement(MaterialPageRoute(builder: (_) => widget));
+  }
+
+  goToPage(Widget widget) {
+    navkey.currentState
+        ?.push(MaterialPageRoute(builder: (_) => widget));
   }
 
   back() {

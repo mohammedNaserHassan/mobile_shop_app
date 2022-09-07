@@ -15,9 +15,9 @@ class MixTextWidget  extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodyText2
-                    ?.copyWith(color: green,fontSize: 25,fontWeight: FontWeight.bold))
+                    ?.copyWith(color: green,fontSize: 40,fontWeight: FontWeight.bold))
           ],
-          style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 25,fontWeight: FontWeight.bold)),
+          style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 40,fontWeight: FontWeight.bold)),
     );
   }
 }

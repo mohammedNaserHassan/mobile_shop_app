@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mobile_shop_app/Helper/authHelper.dart';
-import 'package:mobile_shop_app/Helper/fireStore_Helper.dart';
-import 'package:mobile_shop_app/Model/Mobile.dart';
-import 'package:mobile_shop_app/Model/ShoppingModel.dart';
+import 'package:mobile_shop_app/Helper/DioHelper.dart';
+import 'package:mobile_shop_app/Helper/SharedPreferencesHelper.dart';
+import 'package:mobile_shop_app/Model/BannerModel.dart';
+import 'package:mobile_shop_app/Model/CardModel.dart';
+import 'package:mobile_shop_app/Model/FavoriteModel.dart';
+import 'package:mobile_shop_app/Model/ProductModel.dart';
+import 'package:mobile_shop_app/Model/ProfileModel.dart';
+import 'package:mobile_shop_app/Model/SearchModel.dart';
 import 'package:mobile_shop_app/Model/UserModel.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/customDialog.dart';
 import 'package:mobile_shop_app/View/Auth/LoginScreen.dart';
+import 'package:mobile_shop_app/View/Auth/checkEmailScreen.dart';
 import 'package:mobile_shop_app/View/Auth/recieveOtpScreen.dart';
 import 'package:mobile_shop_app/View/Features/BoardingScreen.dart';
 import 'package:mobile_shop_app/View/TabScreens/HomeScreen.dart';
@@ -18,55 +21,29 @@ import 'package:mobile_shop_app/View/TabScreens/Tabs/HomeTab.dart';
 import 'package:mobile_shop_app/View/TabScreens/Tabs/ProfileTab.dart';
 import 'package:mobile_shop_app/View/TabScreens/Tabs/ShopTab.dart';
 
-import '../Model/BoardModel.dart';
 import '../View/Auth/SignupScreen.dart';
+import 'package:open_mail_app/open_mail_app.dart';
+import 'package:mobile_shop_app/Services/Constants.dart';
 
 class MobileProvider extends ChangeNotifier {
-  MobileProvider() {
-    getUserFromFirestore();
+
+/////////////Sae Language/////////////////////////////
+  bool isSavedLanguage = false;
+
+  String getLanguage() {
+    isSavedLanguage = SharedPreferencesHelper.x.getLang();
+    SharedPreferencesHelper.x.saveLang(!isSavedLanguage);
+    return isSavedLanguage ? 'en' : 'ar';
   }
 
-  //////////////////////////// Mobile Shopping////////////////////////
-  List<ShoppingModel> shoppings = [
-    ShoppingModel(
-        name: 'Oneplus 9 pro',
-        image: 'Assets/Images/banner2.png',
-        number: 2,
-        aed: 876,
-        ram: '4/64 RAM'),
-    ShoppingModel(
-        name: 'Oneplus 9 pro',
-        image: 'Assets/Images/banner2.png',
-        number: 2,
-        aed: 876,
-        ram: '4/64 RAM'),
-    ShoppingModel(
-        name: 'Oneplus 9 pro',
-        image: 'Assets/Images/banner2.png',
-        number: 2,
-        aed: 876,
-        ram: '4/64 RAM'),
-    ShoppingModel(
-        name: 'Oneplus 9 pro',
-        image: 'Assets/Images/banner2.png',
-        number: 2,
-        aed: 876,
-        ram: '4/64 RAM'),
-    ShoppingModel(
-        name: 'Oneplus 9 pro',
-        image: 'Assets/Images/banner2.png',
-        number: 2,
-        aed: 876,
-        ram: '4/64 RAM'),
-  ];
+  ///////////////////////////////////////////////////////////////////////////
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///////set Bottom Navigation ////////////////////////
+  /////// set Bottom Navigation ////////////////////////////
   List<Widget> tabs = [
     HomeTab(),
-    ShopTab(),
-    ExploreTab(),
-    FavouriteTab(),
+    const ShopTab(),
+   const  ExploreTab(),
+ const   FavouriteTab(),
     ProfileTab()
   ];
   int selectedIndex = 0;
@@ -77,116 +54,134 @@ class MobileProvider extends ChangeNotifier {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////// Controllers//////////////////////////
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController confirm = TextEditingController();
-  TextEditingController phone = TextEditingController();
-  TextEditingController phone1 = TextEditingController();
-  TextEditingController phone2 = TextEditingController();
-  TextEditingController phone3 = TextEditingController();
-  TextEditingController phone4 = TextEditingController();
 
-  List<String> banners = [
-    'Assets/Images/banner.png',
-    'Assets/Images/banner2.png'
-  ];
 
-  clearControllers() {
-    name.clear();
-    email.clear();
-    password.clear();
-    confirm.clear();
-    phone.clear();
-    phone1.clear();
-    phone2.clear();
-    phone3.clear();
-    phone4.clear();
-  }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   ////////////Get All Mobiles ///////////////////////////////////////////
-  List<MobileModel> mobiles = [
-    MobileModel(
-        image: 'Assets/Images/mobile0.png',
-        name: 'Oneplus 9',
-        rating: 4.5,
-        price: 945,
-        favourite: true,
-        isOffered: true,
-        review: 3),
-    MobileModel(
-        image: 'Assets/Images/mobile1.png',
-        name: 'Oneplus 9',
-        rating: 4.5,
-        price: 945,
-        favourite: true,
-        isOffered: true,
-        review: 3),
-    MobileModel(
-        image: 'Assets/Images/mobile2.png',
-        name: 'Oneplus 9',
-        rating: 4.5,
-        price: 945,
-        favourite: true,
-        isOffered: true,
-        review: 3),
-    MobileModel(
-        image: 'Assets/Images/mobile3.png',
-        name: 'Oneplus 9',
-        rating: 4.5,
-        price: 945,
-        favourite: true,
-        isOffered: true,
-        review: 3),
-  ];
+  List<Products> products = [];
+  List<dynamic> productsItems = [];
+  String ads = '';
+
+  bool isShemmer = false;
+
+  getMobiles() {
+    DioHelper.dioHelper.getData(url: HOME).then((value) {
+      productsItems = value?.data['data']['products'];
+      ads = value?.data['data']['ad'];
+      products =
+          productsItems.map((value) => Products.fromJson(value)).toList();
+      notifyListeners();
+    });
+  }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //////////////////////Password Text Field//////////////////////
-  bool obscure = true;
+//////////////////////Add or Remove to Card/////////////////////////////////////////////////
+  List<CardModel> cartsModels = [];
 
-  changeobscure() {
-    obscure = !obscure;
+  addOrRemoveCard(int id) {
+    DioHelper.dioHelper.customPostData(
+      url: CARD,
+      data: {"product_id": id},
+    ).then((value) {
+      CustomDialog.customDialog.showCustom(value?.data['message']);
+      getCards();
+    });
     notifyListeners();
   }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  CardItem card = CardItem();
+  num total = 0, subTotal = 0;
 
-  //////////////////////Country codeNumber for Mobile number////////////////////////////////////////////
-  List<String> countries = ['+00', '+972', '+90', '+91'];
-  String selected = '+00';
+  getCards() {
+    card = CardItem();
+    DioHelper.dioHelper.getData(url: CARD).then((value) {
+      card = CardItem.fromJson(value?.data["data"]);
+      cartsModels = card.cartItems ?? [];
+      total = card.total ?? 0;
+      subTotal = card.subTotal ?? 0;
+      notifyListeners();
+    });
+  }
 
-  setCountries(String x) {
-    selected = x;
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  ////////////////Update amount of cards ///////////////////////////////
+  increment(num qount, int id, {required int index}) {
+    num price = cartsModels[index].product!.price ?? 0;
+    ++qount;
+    cartsModels[index].quantity = qount;
+    total = total + price;
+    subTotal = subTotal + price;
+    updateCard(id: id, quntity: qount);
     notifyListeners();
   }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  decrement(num qount, int id, {required int index}) {
+    num price = cartsModels[index].product!.price ?? 0;
+    if (qount > 1) {
+      --qount;
+      cartsModels[index].quantity = qount;
+      total = total - price;
+      subTotal = subTotal - price;
+      updateCard(id: id, quntity: qount);
+      notifyListeners();
+    }
+  }
+
+  updateCard({required int id, required num quntity}) {
+    DioHelper.dioHelper.putDataWithToken(
+      url: CARD + '/${id}',
+      data: {"quantity": quntity},
+    );
+    notifyListeners();
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////Add or Remove to Favorite/////////////////////////////////////////////////
+  List<FavoriteModel> favoritesModels = [];
+
+  removeFavorite(int id,int secondId) {
+  Products produc =  products.where((element) => element.id==secondId).first;
+    produc.inFavorites=false;
+  favoritesModels.removeWhere((element) => element.id == id);
+  DioHelper.dioHelper.delete( FAVORRITE + '/${id}').then((value) => getMobiles());
+    notifyListeners();
+  }
+
+  addOrRemoveFavourite(int id,) {
+    Products product = products.where((element) => element.id == id).first;
+    bool fav = product.inFavorites ?? false;
+    product.inFavorites = !fav;
+    DioHelper.dioHelper.customPostData(
+      url: FAVORRITE,
+      data: {"product_id": id},
+    ).then((value) {
+      getFavorites();
+    });
+    notifyListeners();
+  }
+
+  getFavorites() {
+    DioHelper.dioHelper
+        .getData(
+      url: FAVORRITE,
+    )
+        .then((value) {
+      List<dynamic> favorites = value?.data['data']['data'];
+      favoritesModels =
+          favorites.map((e) => FavoriteModel.fromJson(e)).toList();
+      notifyListeners();
+    });
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
 
   ////////////////////// Set up for Boarding screen///////////////////////////////////////////////////////
   Color color = Colors.green;
   List<bool> states = [true, false, false];
   PageController controller = PageController();
-  List<Board> boards = [
-    Board(
-        title: 'Get the Best Smartphone ',
-        image: 'Assets/Images/Boarding/1.png',
-        subtitle:
-            'Lorem Ipsum is simply dummy text of the \n printing and typesetting..'),
-    Board(
-        title: 'Great experince with \n our product ',
-        image: 'Assets/Images/Boarding/2.png',
-        subtitle:
-            'Lorem Ipsum is simply dummy text of the \n printing and typesetting..'),
-    Board(
-        title: 'Get product from at home ',
-        image: 'Assets/Images/Boarding/3.png',
-        subtitle:
-            'Lorem Ipsum is simply dummy text of the \n  printing and typesetting..'),
-  ];
 
   scrollChange(int index) {
     controller.animateToPage(index,
@@ -210,160 +205,95 @@ class MobileProvider extends ChangeNotifier {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  /////Sign up///////////////////////////////////////////
-  register() async {
-    if (name.text.length != 0 &&
-        email.text.length != 0 &&
-        password.text.length != 0 &&
-        confirm.text.length != 0 &&
-        check) {
-      if (password.text == confirm.text) {
-        if (check) {
-          try {
-            UserCredential? userCredential =
-                await Auth_helper.auth_helper.signup(email.text, password.text);
-            UserModel registerRequest = UserModel(
-              id: userCredential?.user?.uid ?? "",
-              email: email.text,
-              name: name.text,
-            );
-            await fireStore_Helper.helper.addUserToFireBase(registerRequest);
-            await Auth_helper.auth_helper.signOut();
-            clearControllers();
-            AppRouter.appRouter.goWithReplacement(LoginScreen());
-          } on Exception catch (e) {
-            print(e);
-          }
-        } else {
-          CustomDialog.customDialog
-              .showCustom('You should accept and agree of the terms');
-        }
-      } else {
-        CustomDialog.customDialog.showCustom('Password not match');
-      }
-    } else {
-      CustomDialog.customDialog.showCustom('Please fill all the fields');
-    }
-    notifyListeners();
+  ////////////////////Get Banners///////////////////////////////////
+  List<DataBanners>? banners = [];
+
+  getBanners() {
+    DioHelper.dioHelper.getData(url: BANNERS).then((value) {
+      Banenr bannerModels = Banenr();
+      bannerModels = Banenr.fromJson(value?.data);
+      banners = bannerModels.data;
+      notifyListeners();
+    });
   }
 
-///////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  //////////////////////////// Search of Product///////////////////////////////
+  List<SearchModel> searchModels = [];
 
-  /////////// Send OTP to mobile number///////////
-  sendOtp() {
-    if (phone.text.length != 0) {
-      AppRouter.appRouter.goWithReplacement(recieveOtpScreen());
-    } else {
-      CustomDialog.customDialog.showCustom('Please enter your phone');
-    }
+  searchProduct(String searched) {
+    DioHelper.dioHelper
+        .postData(url: SEARCH, data: {"text": searched}).then((value) {
+      List<dynamic> searches = value?.data['data']['data'];
+      searchModels = searches.map((e) => SearchModel.fromJson(e)).toList();
+    });
   }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  List<SearchModel> searchSModels = [];
 
-  /////////// Verify OTP code sent/////////////////////////////////
-  verifyphonenumber() {
-    if (phone1.text.length != 0 &&
-        phone2.text.length != 0 &&
-        phone3.text.length != 0 &&
-        phone4.text.length != 0) {
-      AppRouter.appRouter.goWithReplacement(LoginScreen());
-    } else {
-      CustomDialog.customDialog.showCustom('Please enter verification number');
-    }
+  searchSProduct(String searched) {
+    DioHelper.dioHelper
+        .postData(url: SEARCH, data: {"text": searched}).then((value) {
+      List<dynamic> searches = value?.data['data']['data'];
+      searchSModels = searches.map((e) => SearchModel.fromJson(e)).toList();
+    });
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-  /////////// Check Tile for Registration//////////////////////
-  bool check = false;
-
-  changeCheck() {
-    check = !check;
-    notifyListeners();
-  }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  ///////////// Confirm Password/////////////////////////////////
-  confirmPassword() {
-    if (password.text.length != 0 && confirm.text.length != 0) {
-      if (password.text == confirm.text) {
-        AppRouter.appRouter.goWithReplacement(LoginScreen());
-      } else {
-        CustomDialog.customDialog.showCustom('Password not matched');
-      }
-    } else {
-      CustomDialog.customDialog.showCustom('Please fill the fields');
-    }
-  }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  //////////////////Reset Password////////////////////////////////////////////////////////////////////////////
-  resetPassword() async {
-    if (email.text.length != 0) {
-      await Auth_helper.auth_helper.resetPassword(email.text.trim());
-      clearControllers();
-      AppRouter.appRouter.goWithReplacement(LoginScreen());
-      CustomDialog.customDialog
-          .showCustom('Check  your email to reset password');
-    } else {
-      CustomDialog.customDialog.showCustom('Please Enter your email address');
-    }
-  }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  ///////////////////Login////////////////////////////////////
-  String? userId;
-
-  login() async {
-    if (email.text.length != 0 && password.text.length != 0) {
-      UserCredential? userCredential =
-          await Auth_helper.auth_helper.signin(email.text, password.text);
-      await fireStore_Helper.helper.getUserFromFirestore();
-      userId = Auth_helper.auth_helper.getUserId();
-      clearControllers();
-      AppRouter.appRouter.goWithReplacement(HomeScreen());
-    } else {
-      CustomDialog.customDialog.showCustom("Please fill all the fields");
-    }
-    notifyListeners();
-  }
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  /////////// Get User from FireStore ///////////////////////////////////////////////////////
-  UserModel user = UserModel(name: '', email: '', id: '');
-
-  getUserFromFirestore() async {
-    user = await fireStore_Helper.helper.getUserFromFirestore();
-    notifyListeners();
-  }
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   ////////////////////////////Check if user found//////////////////////////
+
   checkEnter() {
-    bool isLoggin = Auth_helper.auth_helper.checkUser();
-    if (isLoggin) {
-      this.userId = Auth_helper.auth_helper.getUserId();
-      getUserFromFirestore();
-      AppRouter.appRouter.goWithReplacement(HomeScreen());
-    } else {
-      AppRouter.appRouter.goWithReplacement(BoardingScreen());
-    }
+    getBanners();
+    getMobiles();
+    getProfile();
+    getFavorites();
+    getCards();
+    searchProduct('Xiaomi');
+    searchSProduct('z');
+    bool verify = SharedPreferencesHelper.x.getVerify();
+    Future.delayed(Duration(seconds: 3)).then((value) => {
+          if (SharedPreferencesHelper.x.getUserEnter() == 1)
+            {
+              verify
+                  ? AppRouter.appRouter.goWithReplacement(ShowProgress())
+                  : AppRouter.appRouter.goWithReplacement(LoginScreen())
+            }
+          else
+            {AppRouter.appRouter.goWithReplacement(BoardingScreen())}
+        });
+    SharedPreferencesHelper.x.saveUserEnter();
   }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //////////////////Sign out////////////////////////////////////
-  logOut() async {
-    await Auth_helper.auth_helper.signOut();
-    userId = null;
-    this.selectedIndex = 0;
-    AppRouter.appRouter.goWithReplacement(LoginScreen());
+  ////////////////////Delete Product //////////////////////////////////////
+  deleteCard(int id) {
+    CardModel cardModel =
+        cartsModels.where((element) => element.id == id).first;
+    num price = cardModel.product!.price ?? 0;
+    num quntity = cardModel.quantity ?? 0;
+    total = total - quntity * price;
+    cartsModels.remove(cardModel);
+    DioHelper.dioHelper.delete(CARD + '/${id}');
     notifyListeners();
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////Get My Profile/////////////////////
+
+  Profile profileModel = Profile();
+
+  getProfile() {
+    DioHelper.dioHelper.getData(
+      url: PROFILE,
+    )
+        .then((value) {
+      profileModel = Profile.fromJson(value?.data);
+      notifyListeners();
+    });
   }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

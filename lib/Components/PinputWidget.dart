@@ -25,7 +25,7 @@ class PinPutWidget extends StatelessWidget {
           FilteringTextInputFormatter.digitsOnly
         ],
         textAlign: TextAlign.center,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.phone,
         style: TextStyle(fontSize: 16.sp,color: black),
         decoration: InputDecoration(
           border: InputBorder.none,

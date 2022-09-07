@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobile_shop_app/Controller/AuthProvider.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
+import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 class TextFieldWidget extends StatelessWidget {
@@ -11,39 +13,53 @@ class TextFieldWidget extends StatelessWidget {
   double bottom;
   bool state;
   TextEditingController controller;
-   TextFieldWidget({Key? key,required this.title, this.obscure=false,required this.prefix,required this.bottom,this.state=false,this.suffix,required this.controller}) : super(key: key);
+  TextInputType type;
+   TextFieldWidget({Key? key,required this.title, this.obscure=false,required this.prefix,required this.bottom,this.state=false,this.suffix,required this.controller,this.type=TextInputType.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MobileProvider>(
+    return Consumer<AuthProvider>(
       builder: (context,provider,index) {
         return Container(
           margin: EdgeInsets.only(bottom:bottom),
-          padding: EdgeInsets.only(top: 7.h),
           width: 325.w,
           height: 60.h,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(5.r),
+            borderRadius: BorderRadius.circular(10.r),
+            boxShadow: [
+              BoxShadow(
+                color: black.withOpacity(0.1),
+                spreadRadius: 0,
+                blurRadius: 20
+              )
+            ]
           ),
           child: TextField(
+            textInputAction:TextInputAction.next ,
+            keyboardType: type,
             obscureText:obscure ,
             controller: controller,
             decoration: InputDecoration(
               border: InputBorder.none,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: green),
+                borderRadius: BorderRadius.circular(10.r)
+              ),
               hintText: title,
               suffixIcon: suffix,
               prefixIcon: state?
               Container(
                 margin:  EdgeInsets.symmetric(horizontal: 5.w),
                 child: DropdownButton<String>(
+                  alignment: Alignment.center,
                   value: provider.selected,
-                  icon: Container(child: Image.asset('Assets/Icons/Arrow - Down 2.png'),margin: EdgeInsets.symmetric(horizontal: 5.w),),
+                  icon: Container(child: Image.asset('Assets/Icons/Arrow - Down 2.png',color: green,),margin: EdgeInsets.symmetric(horizontal: 5.w),),
                   underline: SizedBox(),
                   items: provider.countries.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text(value,style: TextStyle(color:green),),
                     );
                   }).toList(),
                   onChanged: (index) {
@@ -51,7 +67,7 @@ class TextFieldWidget extends StatelessWidget {
                   },
                 ),
               )
-                  :SvgPicture.asset(prefix, fit: BoxFit.scaleDown),
+                  :SvgPicture.asset(prefix, fit: BoxFit.scaleDown,color: green,),
             ),
           ),
         );

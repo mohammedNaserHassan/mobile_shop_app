@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobile_shop_app/Controller/AuthProvider.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
+import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
+import 'package:mobile_shop_app/View/TabScreens/ProfileScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileTab extends StatelessWidget {
-  const ProfileTab({Key? key}) : super(key: key);
+   ProfileTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,47 +23,53 @@ class ProfileTab extends StatelessWidget {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Consumer<MobileProvider>(
-  builder: (context, provider, child) {
+        child: Consumer2<MobileProvider,AuthProvider>(
+  builder: (context, provider,auth, child) {
   return Column(
           children: [
-            Container(
-              width: double.infinity,
-              height: 80,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5),
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+            GestureDetector(
+              onTap: (){
+                AppRouter.appRouter.goToPage(ProfileScreen());
+              },
+              child: Container(
+                width: double.infinity,
+                height: 80.h,
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                decoration: BoxDecoration(
+                    color: Colors.white, borderRadius: BorderRadius.circular(10.r)),
+                child: Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 2.w,right: 15.w,top: 1.h),
+                      height: 70.h,
+                      width: 60.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Image.asset(
+                        'Assets/Images/profile.png',
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                    child: Image.asset(
-                      'Assets/Images/profile.png',
-                      fit: BoxFit.fill,
+                    SizedBox(
+                      width: 10.w,
                     ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    provider.user.name,
-                    style: Theme.of(context).textTheme.headline6?.copyWith(fontSize: 16),
-                  ),
-                  Spacer(),
-                  Icon(Icons.arrow_forward_ios),
-                  SizedBox(
-                    width: 20,
-                  )
-                ],
+                    Text(
+                      provider.profileModel.data?.name??'',
+                      overflow: TextOverflow.fade,
+                      style: Theme.of(context).textTheme.headline6?.copyWith(fontSize: 16.sp,fontWeight: FontWeight.bold),
+                    ),
+                    Spacer(),
+                    Icon(Icons.arrow_forward_ios),
+                    SizedBox(
+                      width: 20.w,
+                    )
+                  ],
+                ),
               ),
             ),
             Container(
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 30.h),
                 child: Divider(
                   color: light,
                 )),
@@ -69,7 +79,10 @@ class ProfileTab extends StatelessWidget {
             profileTile(title: 'My purchess', icon: 'Wallet',function: (){}),
             profileTile(title: 'Address', icon: 'Location',function: (){}),
             profileTile(title: 'Privacy', icon: 'privacy',function: (){}),
-            profileTile(title: 'Log out', icon: 'Logout',function:provider.logOut),
+            profileTile(title: 'Log out', icon: 'Logout',function:(){
+              auth.logOut();
+              provider.setIndex(0);
+            }),
           ],
         );
   },
@@ -92,6 +105,10 @@ class profileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.r)
+      ),
       child: ListTile(
         onTap: function,
         leading: SvgPicture.asset('Assets/Icons/${icon}.svg'),
@@ -100,7 +117,7 @@ class profileTile extends StatelessWidget {
           style: TextStyle(color: green),
         ),
       ),
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      margin: EdgeInsets.symmetric(vertical: 5.h ,horizontal: 15.w),
     );
   }
 }

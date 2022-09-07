@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile_shop_app/Services/Constants.dart';
 class ButtonWidget extends StatelessWidget {
+  bool isBorder;
   String title;
   Color color;
   Color textColor;
   VoidCallback function;
   ButtonWidget({Key? key,
-    required this.title,required this.color,required this.function,this.textColor=Colors.white
+    required this.title,required this.color,required this.function,this.textColor=Colors.white,this.isBorder=false
   }) : super(key: key);
 
   @override
@@ -21,6 +23,7 @@ decoration:
 BoxDecoration(
 color: color,
 borderRadius: BorderRadius.circular(10.r),
+  border: Border.all(color: isBorder?black:Colors.transparent)
 ),
 ),
     );

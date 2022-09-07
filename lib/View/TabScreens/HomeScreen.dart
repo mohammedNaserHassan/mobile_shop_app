@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
+import 'package:mobile_shop_app/Services/AppRouter.dart';
+import 'package:mobile_shop_app/Services/Constants.dart';
+import 'package:mobile_shop_app/View/TabScreens/Tabs/HomeTab.dart';
 import 'package:provider/provider.dart';
 import 'package:bottom_navigation_view/bottom_navigation_view.dart';
+class ShowProgress extends StatelessWidget {
+  const ShowProgress({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Provider.of<MobileProvider>(context,listen: false).getMobiles();
+    Future.delayed(Duration(seconds: 3)).then((value) {
+      AppRouter.appRouter.goWithInternalAnimation(HomeScreen());
+
+    });
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
+      body: Center(
+        child: LinearProgressIndicator(color: green,minHeight: 5.h),
+      ),
+    );
+  }
+}
 
 class HomeScreen extends StatefulWidget{
   const HomeScreen({Key? key}) : super(key: key);
@@ -44,15 +68,13 @@ class _HomeScreenState extends State<HomeScreen>   with SingleTickerProviderStat
             );
           },
         ),
-        body:Consumer<MobileProvider>(
-            builder: (cont,provider,index)=>BottomNavigationView(
+        body:    BottomNavigationView(
           controller: _controller,
           transitionType: BottomNavigationTransitionType.fadeInOut,
           backgroundColor: Colors.lime,
           children: provider.tabs,
           ),
         )
-      ),
     );
   }
 }
@@ -66,11 +88,11 @@ class bottomItem extends StatelessWidget {
     return Selector<MobileProvider,int>(
       selector: (context,selected)=>selected.selectedIndex,
       builder:(context,data,child)=> Container(
-          width: 35,
-          height: 35,
+          width: 35.w,
+          height: 35.h,
          decoration: BoxDecoration(
            color:  data==index?Colors.green:Colors.transparent,
-           borderRadius: BorderRadius.circular(5)
+           borderRadius: BorderRadius.circular(5.r)
          ),
           child: SvgPicture.asset('Assets/Icons/${icon}.svg',color:  data==index?Colors.white:Colors.grey,fit: BoxFit.scaleDown,)),
     );

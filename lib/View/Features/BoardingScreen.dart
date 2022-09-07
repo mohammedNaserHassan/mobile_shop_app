@@ -20,11 +20,11 @@ class BoardingScreen extends StatelessWidget {
             },
             physics: const AlwaysScrollableScrollPhysics(),
             controller: value.controller,
-            itemCount: value.boards.length,
+            itemCount: boards.length,
             itemBuilder: (context, index) => Column(
               children: [
                 Image.asset(
-                  value.boards[index].image,
+                  boards[index].image,
                   height: index == 0 ? 370.h : 400.h,
                 ),
                 if (index == 0)
@@ -41,7 +41,7 @@ class BoardingScreen extends StatelessWidget {
                     Indicator(color: value.states[2]),
                   ],
                 ),
-                Text(value.boards[index].title,
+                Text(boards[index].title,
                     style: Theme.of(context).textTheme.bodyText1,
                     textAlign: TextAlign.center,
                     maxLines: 2),
@@ -49,7 +49,7 @@ class BoardingScreen extends StatelessWidget {
                   height: 16.h,
                 ),
                 Text(
-                  value.boards[index].subtitle,
+                  boards[index].subtitle,
                   style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
                   maxLines: 2,

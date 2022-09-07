@@ -3,6 +3,7 @@ import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Components/MixTextWidget.dart';
 import 'package:mobile_shop_app/Components/RowLineWidget.dart';
 import 'package:mobile_shop_app/Components/TextFieldWidget.dart';
+import 'package:mobile_shop_app/Controller/AuthProvider.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:mobile_shop_app/View/Auth/LoginScreen.dart';
@@ -16,7 +17,7 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Consumer<MobileProvider>(builder: (context, provider, index) {
+      body: Consumer<AuthProvider>(builder: (context, provider, index) {
         return Container(
           margin: EdgeInsets.symmetric(
             horizontal: 40.w,
@@ -32,68 +33,66 @@ class SignupScreen extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
-                    ?.copyWith(fontSize: 18.sp,color: Colors.grey),
+                    ?.copyWith(fontSize: 18.sp, color: Colors.grey),
               ),
               SizedBox(
                 height: 70.h,
               ),
-              TextFieldWidget(
-                controller: provider.name,
-                bottom: 14.h,
-                title: 'Full name',
-                prefix: 'Assets/Icons/Profile.svg',
-              ),
-              TextFieldWidget(
-                controller: provider.email,
-                bottom: 14.h,
-                title: 'Email or Phone',
-                prefix: 'Assets/Icons/email.svg',
-              ),
-              TextFieldWidget(
-                controller: provider.password,
-                bottom: 14.h,
-                title: 'Password',
-                prefix: 'Assets/Icons/Lock.svg',
-              ),
-              TextFieldWidget(
-                controller: provider.confirm,
-                bottom: 8.h,
-                title: 'Confirm Password',
-                prefix: 'Assets/Icons/Lock.svg',
-              ),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: provider.changeCheck,
-                    child: Stack(
-                      children: [
-                        Image.asset(
-                          'Assets/Images/Rectangle 59.png',scale: 0.9,
-                        ),
-                          Visibility(
-                            visible: provider.check,
-                            child: Icon(
-                              Icons.check,
-                              color: green,
-                              size: 14.sp,
-                            ),
-                          )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 6.w,
-                  ),
-                  Text(
+            ListView(
+              physics: ClampingScrollPhysics(),
+              shrinkWrap: true,
+              children: [
+                TextFieldWidget(
+                  controller: provider.name,
+                  bottom: 14.h,
+                  title: 'Full name',
+                  prefix: 'Assets/Icons/Profile.svg',
+                ),
+                TextFieldWidget(
+                  controller: provider.email,
+                  bottom: 14.h,
+                  title: 'Email',
+                  prefix: 'Assets/Icons/email.svg',
+                ),
+                TextFieldWidget(
+                  type: TextInputType.phone,
+                  state: true,
+                  controller: provider.phone,
+                  bottom: 14.h,
+                  title: 'Phone number',
+                  prefix: 'Assets/Icons/email.svg',
+                ),
+                TextFieldWidget(
+                  controller: provider.password,
+                  bottom: 14.h,
+                  title: 'Password',
+                  prefix: 'Assets/Icons/Lock.svg',
+                ),
+                TextFieldWidget(
+                  controller: provider.confirm,
+                  bottom: 8.h,
+                  title: 'Confirm Password',
+                  prefix: 'Assets/Icons/Lock.svg',
+                ),
+              ],
+            ),
+              CheckboxListTile(
+                contentPadding: EdgeInsets.zero,
+                checkColor: green,
+                  controlAffinity:ListTileControlAffinity.leading,
+                  activeColor: green,
+                  value: provider.check,
+                  onChanged: (val) {
+                    provider.changeCheck(val??false);
+                  },
+                  title: Text(
                     'Agree with trams and condition.',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  )
-                ],
-              ),
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(color: grey,),
+                  )),
               SizedBox(
                 height: 40.h,
               ),
-              ButtonWidget(
+              provider.isRegister?Center(child: CircularProgressIndicator()):     ButtonWidget(
                   title: 'Sign Up', color: black, function: provider.register),
               Spacer(),
               RowLineWidget(
