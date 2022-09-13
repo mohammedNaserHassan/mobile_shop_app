@@ -1,10 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mobile_shop_app/Components/profileTile.dart';
 import 'package:mobile_shop_app/Controller/AuthProvider.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
-import 'package:mobile_shop_app/View/TabScreens/ProfileScreen.dart';
+import 'package:mobile_shop_app/View/TabScreens/Profile/ProfileScreen.dart';
+import 'package:mobile_shop_app/View/TabScreens/Profile/SettingsScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,7 +20,7 @@ class ProfileTab extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 100,
         title: Text(
-          'Profile',
+          'Profile'.tr(),
           style: Theme.of(context).textTheme.headline5,
         ),
         centerTitle: true,
@@ -46,9 +49,11 @@ class ProfileTab extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
                       ),
-                      child: Image.asset(
-                        'Assets/Images/profile.png',
-                        fit: BoxFit.fill,
+                      child:  FadeInImage.assetNetwork(
+                        placeholder: 'Assets/Images/profile.png',
+                        image: provider.profileModel.data?.image?? 'Assets/Images/profile.png',
+                        fit: BoxFit.cover,
+                        height: 150.h,
                       ),
                     ),
                     SizedBox(
@@ -73,13 +78,15 @@ class ProfileTab extends StatelessWidget {
                 child: Divider(
                   color: light,
                 )),
-            profileTile(title: 'Settings', icon: 'Setting',function: (){}),
-            profileTile(title: 'Order Tracking', icon: 'rack',function: (){}),
-            profileTile(title: 'Payment Method', icon: 'payment',function: (){}),
-            profileTile(title: 'My purchess', icon: 'Wallet',function: (){}),
+            profileTile(title: 'Settings', icon: 'Setting',function: (){
+              AppRouter.appRouter.goToPage(SettingsScreen());
+            }),
+            profileTile(title: 'OrderTracking', icon: 'rack',function: (){}),
+            profileTile(title: 'PaymentMethod', icon: 'payment',function: (){}),
+            profileTile(title: 'Mypurches'.tr(), icon: 'Wallet',function: (){}),
             profileTile(title: 'Address', icon: 'Location',function: (){}),
             profileTile(title: 'Privacy', icon: 'privacy',function: (){}),
-            profileTile(title: 'Log out', icon: 'Logout',function:(){
+            profileTile(title: 'Logout', icon: 'Logout',function:(){
               auth.logOut();
               provider.setIndex(0);
             }),
@@ -88,36 +95,6 @@ class ProfileTab extends StatelessWidget {
   },
 ),
       ),
-    );
-  }
-}
-
-class profileTile extends StatelessWidget {
-  String title, icon;
-  Function() function;
-
-  profileTile({
-    required this.icon,
-    required this.title,
-    required this.function
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5.r)
-      ),
-      child: ListTile(
-        onTap: function,
-        leading: SvgPicture.asset('Assets/Icons/${icon}.svg'),
-        title: Text(
-          title,
-          style: TextStyle(color: green),
-        ),
-      ),
-      margin: EdgeInsets.symmetric(vertical: 5.h ,horizontal: 15.w),
     );
   }
 }

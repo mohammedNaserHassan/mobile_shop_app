@@ -5,14 +5,13 @@ import 'package:mobile_shop_app/Model/ProductModel.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
-import 'package:mobile_shop_app/View/ProductDetails.dart';
+import 'package:mobile_shop_app/View/TabScreens/HomePages/Action/ProductDetails.dart';
 import 'package:provider/provider.dart';
 
 class MobileItemWidget extends StatelessWidget {
   Products mobileModel;
-  bool isShimmer;
 
-  MobileItemWidget({required this.mobileModel,this.isShimmer=false});
+  MobileItemWidget({required this.mobileModel});
 
   @override
   Widget build(BuildContext context) {
@@ -67,15 +66,14 @@ class MobileItemWidget extends StatelessWidget {
                   fit: BoxFit.cover,
                   height: 150.h,
                 )),
-            isShimmer?Center():   Text(
+              Text(
               mobileModel.name??'',
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            isShimmer?Center():   Text(mobileModel.price.toString() + '.00 AED',),
-            isShimmer?Center(): Text('⭐' +
-                mobileModel.oldPrice.toString() +
-                '(${mobileModel.price}K review)',overflow: TextOverflow.ellipsis,)
+              Text(mobileModel.price.toString() + '.00 \$',),
+             Text('⭐ ${mobileModel.oldPrice??'22'}'+
+                '(${mobileModel.price}K )',overflow: TextOverflow.ellipsis,)
           ],
         ),
       ),

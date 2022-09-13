@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
@@ -32,13 +33,13 @@ class ResetPassScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Reset password',
+                'Resetpassword'.tr(),
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 20,fontWeight: FontWeight.bold),
               ),
               Container(
                 margin: EdgeInsets.only(top: 16.h, bottom: 33.h),
                 child: Text(
-                  'Enter the email associated with your account and \n we’ll send an email with instructions to reset your\n password!',
+                  'TextResetPassword'.tr(),
                   style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.grey,fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
@@ -47,11 +48,11 @@ class ResetPassScreen extends StatelessWidget {
               TextFieldWidget(
                 controller: provider.email,
                 bottom:24 ,
-                title: 'Email address',
+                title: 'EmailAddress'.tr(),
                 prefix: '',
               ),
               ButtonWidget(
-                title: 'Next',
+                title: 'Next'.tr(),
                 color: green,
                 function: provider.resetPassword,
               ),

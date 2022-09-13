@@ -1,9 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Components/PinputWidget.dart';
 import 'package:mobile_shop_app/Controller/AuthProvider.dart';
-import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:mobile_shop_app/View/Auth/sendOtpScreen.dart';
@@ -35,13 +35,13 @@ class recieveOtpScreen extends StatelessWidget {
                 height: 45.h,
               ),
               Text(
-                'Phone Verification',
+                'PhoneVerification'.tr(),
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Container(
                 margin:  EdgeInsets.only(top: 16.h, bottom: 33.h),
                 child: Text(
-                  'We need to register your phone number before \ngetting srated!',
+                  'textRecieve'.tr(),
                   style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
                 ),
@@ -62,7 +62,7 @@ class recieveOtpScreen extends StatelessWidget {
                     ],
                   )),
       provider.isVerified?Center(child: CircularProgressIndicator(),):        ButtonWidget(
-                title: 'verify phone number',
+                title: 'verifyphonenumber'.tr(),
                 color: green,
                 function: provider.verifyphonenumber,
               ),
@@ -74,7 +74,7 @@ class recieveOtpScreen extends StatelessWidget {
                   AppRouter.appRouter.goWithReplacement(sendOtpScreen());
                 },
                 child: Text(
-                  'Edit phone number?',
+                  'Editphonenumber'.tr(),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -90,7 +90,7 @@ class recieveOtpScreen extends StatelessWidget {
                   onTap: (){},
                   child: Center(
                     child: Text(
-                      'Send again',
+                      'Sendagain'.tr(),
                       style: Theme.of(context)
                           .textTheme
                           .headline5

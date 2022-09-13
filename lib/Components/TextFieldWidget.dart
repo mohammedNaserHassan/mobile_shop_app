@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Controller/AuthProvider.dart';
-import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,7 +53,7 @@ class TextFieldWidget extends StatelessWidget {
                 child: DropdownButton<String>(
                   alignment: Alignment.center,
                   value: provider.selected,
-                  icon: Container(child: Image.asset('Assets/Icons/Arrow - Down 2.png',color: green,),margin: EdgeInsets.symmetric(horizontal: 5.w),),
+                  icon: Container(child: SvgPicture.asset('Assets/Icons/down.svg',color: green,fit: BoxFit.scaleDown),margin: EdgeInsets.symmetric(horizontal: 5.w),),
                   underline: SizedBox(),
                   items: provider.countries.map((String value) {
                     return DropdownMenuItem<String>(

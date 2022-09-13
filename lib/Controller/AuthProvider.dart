@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Helper/DioHelper.dart';
@@ -9,8 +10,9 @@ import 'package:mobile_shop_app/Services/customDialog.dart';
 import 'package:mobile_shop_app/View/Auth/LoginScreen.dart';
 import 'package:mobile_shop_app/View/Auth/checkEmailScreen.dart';
 import 'package:mobile_shop_app/View/Auth/recieveOtpScreen.dart';
-import 'package:mobile_shop_app/View/TabScreens/HomeScreen.dart';
+import 'package:mobile_shop_app/View/HomeScreen.dart';
 import 'package:open_mail_app/open_mail_app.dart';
+import 'package:provider/provider.dart';
 
 class AuthProvider extends ChangeNotifier{
   //////////////////////// Controllers//////////////////////////
@@ -100,13 +102,13 @@ class AuthProvider extends ChangeNotifier{
           });
         } else {
           CustomDialog.customDialog
-              .showCustom('You should accept and agree of the terms');
+              .showCustom('myCondition'.tr());
         }
       } else {
-        CustomDialog.customDialog.showCustom('Password not match');
+        CustomDialog.customDialog.showCustom('passwordNotmatch'.tr());
       }
     } else {
-      CustomDialog.customDialog.showCustom('Please fill all the fields');
+      CustomDialog.customDialog.showCustom('fillFields'.tr());
     }
     notifyListeners();
   }
@@ -136,7 +138,7 @@ class AuthProvider extends ChangeNotifier{
       });
       notifyListeners();
     } else {
-      CustomDialog.customDialog.showCustom('Please enter verification number');
+      CustomDialog.customDialog.showCustom('enterVerification'.tr());
     }
   }
 
@@ -173,7 +175,7 @@ class AuthProvider extends ChangeNotifier{
         }
       });
     } else {
-      CustomDialog.customDialog.showCustom('Please fill the fields');
+      CustomDialog.customDialog.showCustom('fillFields'.tr());
     }
     notifyListeners();
   }
@@ -202,9 +204,9 @@ class AuthProvider extends ChangeNotifier{
       clearControllers();
       AppRouter.appRouter.goWithReplacement(checkEmailScreen());
       CustomDialog.customDialog
-          .showCustom('Check  your email to reset password');
+          .showCustom('checkEmailPass'.tr());
     } else {
-      CustomDialog.customDialog.showCustom('Please Enter your email address');
+      CustomDialog.customDialog.showCustom('enterEmail'.tr());
     }
   }
 
@@ -215,6 +217,7 @@ class AuthProvider extends ChangeNotifier{
   bool isLoading = false;
 
   login() async {
+    final mobile =  Provider.of<MobileProvider>(AppRouter.appRouter.navkey.currentContext!,listen: false);
     if (email.text.length != 0 && password.text.length != 0) {
       isLoading = true;
       DioHelper.dioHelper.postData(
@@ -225,8 +228,9 @@ class AuthProvider extends ChangeNotifier{
         SharedPreferencesHelper.x.saveVerify(userEnter.status ?? false);
         if (userEnter.status ?? false) {
           SharedPreferencesHelper.x.saveName(userEnter.data?.token ?? '');
-          clearControllers();
-          AppRouter.appRouter.goWithReplacement(HomeScreen());
+          clearControllerWithEmail();
+          mobile.getRequest();
+          Future.delayed(Duration(seconds: 2)).then((value) =>   AppRouter.appRouter.goWithReplacement(HomeScreen()));
         } else {
           CustomDialog.customDialog.showCustom(userEnter.message ?? '');
           isLoading = false;
@@ -235,7 +239,7 @@ class AuthProvider extends ChangeNotifier{
       });
       notifyListeners();
     } else {
-      CustomDialog.customDialog.showCustom("Please fill all the fields");
+      CustomDialog.customDialog.showCustom("fillFields".tr());
     }
   }
 
@@ -243,14 +247,21 @@ class AuthProvider extends ChangeNotifier{
 
   //////////////////Sign out////////////////////////////////////
   logOut() async {
+  final mobile =  Provider.of<MobileProvider>(AppRouter.appRouter.navkey.currentContext!,listen: false);
     isLoading = false;
     DioHelper.dioHelper.postData(
       url: LOGOUT,
-      data: {'fcm_token': token},
+      data: {'fcm_token': SharedPreferencesHelper.x.getName()},
     );
     SharedPreferencesHelper.x.removeVerify();
     SharedPreferencesHelper.x.removeName();
     AppRouter.appRouter.goWithReplacement(LoginScreen());
+  // mobile.cartsModels.clear();
+  // mobile.favoritesModels.clear();
+  // mobile.recentlyProducts.clear();
+  // mobile.products.clear();
+  // mobile.total =0;
+  // mobile.subTotal=0;
     notifyListeners();
   }
 

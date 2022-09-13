@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Components/MixTextWidget.dart';
@@ -27,9 +28,9 @@ class SignupScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
-              MixTextWidget(text1: 'Sign', text2: 'Up'),
+              MixTextWidget(text1: 'Sign'.tr(), text2: 'Up'.tr()),
               Text(
-                'Create a new account!',
+                'CreateAcc'.tr(),
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
@@ -45,13 +46,13 @@ class SignupScreen extends StatelessWidget {
                 TextFieldWidget(
                   controller: provider.name,
                   bottom: 14.h,
-                  title: 'Full name',
+                  title: 'Fullname'.tr(),
                   prefix: 'Assets/Icons/Profile.svg',
                 ),
                 TextFieldWidget(
                   controller: provider.email,
                   bottom: 14.h,
-                  title: 'Email',
+                  title: 'Email'.tr(),
                   prefix: 'Assets/Icons/email.svg',
                 ),
                 TextFieldWidget(
@@ -59,19 +60,19 @@ class SignupScreen extends StatelessWidget {
                   state: true,
                   controller: provider.phone,
                   bottom: 14.h,
-                  title: 'Phone number',
+                  title: 'Phonenumber'.tr(),
                   prefix: 'Assets/Icons/email.svg',
                 ),
                 TextFieldWidget(
                   controller: provider.password,
                   bottom: 14.h,
-                  title: 'Password',
+                  title: 'Password'.tr(),
                   prefix: 'Assets/Icons/Lock.svg',
                 ),
                 TextFieldWidget(
                   controller: provider.confirm,
                   bottom: 8.h,
-                  title: 'Confirm Password',
+                  title: 'ConfirmPassword'.tr(),
                   prefix: 'Assets/Icons/Lock.svg',
                 ),
               ],
@@ -86,19 +87,19 @@ class SignupScreen extends StatelessWidget {
                     provider.changeCheck(val??false);
                   },
                   title: Text(
-                    'Agree with trams and condition.',
+                    'Aggrement'.tr(),
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(color: grey,),
                   )),
               SizedBox(
                 height: 40.h,
               ),
               provider.isRegister?Center(child: CircularProgressIndicator()):     ButtonWidget(
-                  title: 'Sign Up', color: black, function: provider.register),
+                  title: 'SignUp'.tr(), color: black, function: provider.register),
               Spacer(),
               RowLineWidget(
                   function: LoginScreen(),
-                  text1: 'Have an account?',
-                  text2: ' Log In')
+                  text1: 'Haveanaccount'.tr(),
+                  text2: 'Login'.tr())
             ],
           ),
         );

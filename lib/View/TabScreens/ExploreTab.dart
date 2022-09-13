@@ -1,10 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Components/MobileItemWidget.dart';
-import 'package:mobile_shop_app/Components/SearchWidget.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
-import 'package:mobile_shop_app/Model/ProductModel.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -17,7 +16,7 @@ class ExploreTab extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 100.h,
         title: Text(
-          'Explore',
+          'Explore'.tr(),
           style: Theme.of(context).textTheme.headline5,
         ),
         centerTitle: true,
@@ -56,11 +55,11 @@ class ExploreTab extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                     )),
                 ListTile(
-                  leading: Text('Best Seller',
+                  leading: Text('BestSeller'.tr(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 18.sp)),
                   trailing: Text(
-                    'See All',
+                    'SeeAll'.tr(),
                     style: TextStyle(color: Colors.green),
                   ),
                 ),
@@ -70,17 +69,17 @@ class ExploreTab extends StatelessWidget {
                       itemExtent: 200.w,
                       scrollDirection: Axis.horizontal,
                       itemCount: provider.searchModels.length,
-                      itemBuilder: (context, index) => SearchWidget(
+                      itemBuilder: (context, index) => MobileItemWidget(
                           mobileModel: provider.searchModels[index]),
                     )),
                 ListTile(
                   leading: Text(
-                    'Top Trends',
+                    'TopTrends'.tr(),
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
                   ),
                   trailing: Text(
-                    'See All',
+                    'SeeAll'.tr(),
                     style: TextStyle(color: Colors.green),
                   ),
                 ),
@@ -90,7 +89,7 @@ class ExploreTab extends StatelessWidget {
                     itemExtent: 200.w,
                     scrollDirection: Axis.horizontal,
                     itemCount: provider.searchSModels.length,
-                    itemBuilder: (context, index) => SearchWidget(
+                    itemBuilder: (context, index) => MobileItemWidget(
                         mobileModel: provider.searchSModels[index]),
                   ),
                 ),

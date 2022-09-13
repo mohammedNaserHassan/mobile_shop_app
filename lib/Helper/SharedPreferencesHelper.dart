@@ -38,6 +38,10 @@ class SharedPreferencesHelper{
   return  sharedPreferences?.getBool('lang')??false;
  }
 
+ deletLang(){
+    sharedPreferences?.remove('lang');
+ }
+
  saveUserEnter(){
     sharedPreferences?.setInt('entered', 1);
  }
@@ -53,6 +57,6 @@ class SharedPreferencesHelper{
 
 bool  getFavorite(){
    return  sharedPreferences?.getBool('fav')??false;
-
  }
+
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
@@ -71,7 +72,7 @@ class BoardingScreen extends StatelessWidget {
                               color: green),
                           child: Center(
                               child: Text(
-                            'Get Started',
+                            'StartBoard'.tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1

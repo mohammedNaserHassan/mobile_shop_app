@@ -1,10 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
-import 'package:mobile_shop_app/View/TabScreens/Tabs/HomeTab.dart';
 import 'package:provider/provider.dart';
 import 'package:bottom_navigation_view/bottom_navigation_view.dart';
 class ShowProgress extends StatelessWidget {
@@ -36,12 +36,10 @@ class HomeScreen extends StatefulWidget{
 }
 
 class _HomeScreenState extends State<HomeScreen>   with SingleTickerProviderStateMixin {
-  late final BottomNavigationController _controller;
-
   @override
   void initState() {
     super.initState();
-    _controller = BottomNavigationController(vsync: this);
+    Provider.of<MobileProvider>(context,listen: false).bottomController = BottomNavigationController(vsync: this);
   }
 
   @override
@@ -49,12 +47,12 @@ class _HomeScreenState extends State<HomeScreen>   with SingleTickerProviderStat
     return Consumer<MobileProvider>(
       builder: (c, provider, i) => Scaffold(
         bottomNavigationBar: BottomNavigationIndexedBuilder(
-          controller: _controller,
+          controller: provider.bottomController,
           builder: (context, index, child) {
             return BottomNavigationBar(
               currentIndex: provider.selectedIndex,
               onTap: (index) {
-                _controller.goTo(index);
+                provider.bottomController?.goTo(index);
                 provider.setIndex(index);
               },
               type: BottomNavigationBarType.shifting,
@@ -69,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen>   with SingleTickerProviderStat
           },
         ),
         body:    BottomNavigationView(
-          controller: _controller,
+          controller: provider.bottomController,
           transitionType: BottomNavigationTransitionType.fadeInOut,
           backgroundColor: Colors.lime,
           children: provider.tabs,

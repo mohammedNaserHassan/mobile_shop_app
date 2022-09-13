@@ -38,8 +38,8 @@ class FavoriteWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              Text(mobileModel.product?.price.toString()??'' '.00 AED',),
-              Text('⭐ ${mobileModel.product?.oldPrice.toString()} (${mobileModel.product?.price}K review)',    overflow: TextOverflow.ellipsis,)
+              Text(mobileModel.product?.price.toString()??'' '.00 \$',),
+              Text('⭐ ${mobileModel.product?.oldPrice.toString()} (${mobileModel.product?.price}K)',    overflow: TextOverflow.ellipsis,)
             ],
           ),
         );

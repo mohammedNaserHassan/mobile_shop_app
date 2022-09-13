@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
@@ -26,7 +27,7 @@ class ShopTab extends StatelessWidget {
         ],
         centerTitle: true,
         title: Text(
-          'Shopping Cart',
+          'ShoppingCart'.tr(),
           style: Theme.of(context).textTheme.headline5,
         ),
       ),
@@ -39,7 +40,7 @@ class ShopTab extends StatelessWidget {
                 child: provider.cartsModels.length == 0
                     ? Center(
                         child: Text(
-                          'No Cards Yet \n You can Add from Product Details',
+                          'NoCards'.tr(),
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       )
@@ -192,7 +193,7 @@ class ShopTab extends StatelessWidget {
                                             fontSize: 12, color: grey),
                                       ),
                                       Text(
-                                        ' ${provider.cartsModels[index].product?.oldPrice.toString()}AED',
+                                        ' ${provider.cartsModels[index].product?.oldPrice.toString()}\$',
                                         style: TextStyle(color: green),
                                       ),
                                     ],
@@ -227,16 +228,16 @@ class ShopTab extends StatelessWidget {
                       child: Column(
                         children: [
                           ListTile(
-                            leading: Text('Suttotal'),
-                            trailing: Text('${provider.subTotal} AED'),
+                            leading: Text('SubTotal'.tr()),
+                            trailing: Text('${provider.subTotal} \$'),
                           ),
                           ListTile(
-                            leading: Text('Discount'),
+                            leading: Text('Discount'.tr()),
                             trailing: Text('30%'),
                           ),
                           ListTile(
                             leading: Text(
-                              'Shipping',
+                              'Shipping'.tr(),
                               style: TextStyle(color: green),
                             ),
                             trailing: Text(
@@ -257,7 +258,7 @@ class ShopTab extends StatelessWidget {
                           ),
                           ListTile(
                             leading: Text(
-                              'Total',
+                              'Total'.tr(),
                               style: Theme.of(context)
                                   .textTheme
                                   .headline5
@@ -272,7 +273,7 @@ class ShopTab extends StatelessWidget {
                             ),
                           ),
                           ButtonWidget(
-                              title: 'Proceed to checkout',
+                              title: 'Proceedcheckout'.tr(),
                               color: black,
                               function: () {})
                         ],

@@ -37,7 +37,6 @@ dependencies:
   provider: ^6.0.3
   flutter_svg:
   flutter_screenutil:
-  easy_localization:
   carousel_slider:
   bottom_navigation_view:
   dotted_line:
@@ -45,6 +44,10 @@ dependencies:
   open_mail_app: ^0.4.5
   dio: ^4.0.6
   shared_preferences:
+  easy_localization: ^3.0.1
+  image_picker: ^0.8.5+3
+  remove_background: ^0.0.1
+  carousel_indicator: ^1.0.6
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +78,7 @@ flutter:
    - Assets/Images/
    - Assets/Images/Boarding/
    - Assets/Icons/
+   - Assets/Languages/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

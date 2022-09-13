@@ -1,7 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Components/MobileItemWidget.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
+import 'package:mobile_shop_app/Services/AppRouter.dart';
+import 'package:mobile_shop_app/Services/Constants.dart';
+import 'package:mobile_shop_app/View/TabScreens/HomePages/Action/CategoryPage.dart';
+import 'package:mobile_shop_app/View/TabScreens/HomePages/Action/NotificationPage.dart';
+import 'package:mobile_shop_app/View/TabScreens/HomePages/Action/SearchPage.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,32 +15,38 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
       drawerEnableOpenDragGesture: false,
       appBar: AppBar(
         toolbarHeight: 100.h,
         title: Text(
-          'Home',
+          'Home'.tr(),
           style: Theme.of(context).textTheme.headline5,
         ),
         centerTitle: true,
-        leading: Builder(builder: (context) {
-          return GestureDetector(
-            onTap: () {
-              Scaffold.of(context).openDrawer();
-            },
-            child: SvgPicture.asset(
-              'Assets/Icons/drawer.svg',
-              fit: BoxFit.scaleDown,
-            ),
-          );
-        }),
+        leading: GestureDetector(
+          onTap: () {
+            AppRouter.appRouter.goToPage(CategoryPage());
+          },
+          child: SvgPicture.asset(
+            'Assets/Icons/drawer.svg',
+            fit: BoxFit.scaleDown,
+          ),
+        ),
         actions: [
-          SvgPicture.asset('Assets/Icons/search.svg', fit: BoxFit.scaleDown),
-          Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.w),
-              child: SvgPicture.asset('Assets/Icons/notification.svg',
-                  fit: BoxFit.scaleDown)),
+          GestureDetector(
+            onTap: (){
+              AppRouter.appRouter.goToPage(SearchPage());
+            },
+              child: Icon(Icons.search,color: black,size: 30.sp,)),
+          GestureDetector(
+            onTap: (){
+              AppRouter.appRouter.goToPage(NotificationPage());
+            },
+            child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 20.w),
+                child: SvgPicture.asset('Assets/Icons/Group1.svg',
+                    fit: BoxFit.scaleDown)),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -56,11 +68,11 @@ class HomeTab extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                 ),
                 ListTile(
-                  leading: Text('Popular Item',
+                  leading: Text('PopularItem'.tr(),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                   trailing: Text(
-                    'See All',
+                    'SeeAll'.tr(),
                     style: TextStyle(color: Colors.green),
                   ),
                 ),
@@ -76,9 +88,8 @@ class HomeTab extends StatelessWidget {
                       mainAxisExtent: 300,
                     ),
                     itemCount: provider.products.length,
-                    itemBuilder: (context, index) => MobileItemWidget(
-                            mobileModel: provider.products[index])
-                )
+                    itemBuilder: (context, index) =>
+                        MobileItemWidget(mobileModel: provider.products[index]))
               ],
             );
           },

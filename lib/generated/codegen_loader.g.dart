@@ -1,4 +1,18 @@
-{
+
+
+import 'dart:ui';
+
+import 'package:easy_localization/easy_localization.dart' show AssetLoader;
+
+class CodegenLoader extends AssetLoader{
+  const CodegenLoader();
+
+  @override
+  Future<Map<String, dynamic>> load(String fullPath, Locale locale ) {
+    return Future.value(mapLocales[locale.toString()]);
+  }
+
+  static const Map<String,dynamic> ar = {
   "Login": "تسجيل دخول",
   "TitleBorad": "احصل على أفضل هاتف ذكي",
   "SubtitleBoard": "لوريم إيبسوم هو ببساطة نص شكلي لملف\n\\ n الطباعة والتنضيد .. ",
@@ -74,6 +88,7 @@
   "Settings": "إعدادات",
   "OrderTracking": "تتبع الطلب",
   "PaymentMethod": "طريقة الدفع او السداد",
+  "Mypurches": "مشترياتي",
   "Address": "العنوان",
   "Privacy": "سياسات",
   "Logout": "تسجيل خروج",
@@ -86,10 +101,106 @@
   "Specialfeatures": "مميزات خاصة",
   "AddToCart": "اضافة الى السلة",
   "Category": "الصنف",
-  "Mypurches": "مشترياتي",
   "yourpassword": "كلمة مرورك",
   "Thiswill": "سيساعد هذا في استعادة حسابك إذا لزم الأمر",
   "Addname": "أضف اسمًا يساعدك في تحديد رقم بديل",
-  "Inthespotlight": "في دائرة الضوء",
-  "Explore now": "استكشف الآن"
+    "Inthespotlight": "في دائرة الضوء",
+    "Explore now": "استكشف الآن"
+};
+static const Map<String,dynamic> en = {
+  "Login": "Log in",
+  "TitleBorad": "Get the Best Smartphone",
+  "SubtitleBoard": " Lorem Ipsum is simply dummy text of the \\n printing and typesetting..",
+  "StartBoard": " Get Started",
+  "Welcome": "Welcome",
+  "back": "back!",
+  "password": "password",
+  "Forget password": "Forget password?",
+  "SignUp": "Sign up",
+  "HaventAccount": "Haven’t an account?",
+  "Resetpassword": "Reset password",
+  "TextResetPassword": "Enter the email associated with your account and \\n we’ll send an email with instructions to reset your\\n password!",
+  "EmailAddress": "Email address",
+  "Next": "Next",
+  "Sign": "Sign",
+  "Up": "Up",
+  "CreateAcc": "Create a new account!",
+  "Fullname": "Full name",
+  "Email": "Email",
+  "Phonenumber": "Phone number",
+  "ConfirmPassword": "Confirm Password",
+  "Aggrement": "Agree with trams and condition.",
+  "Haveanaccount": "Have an account?",
+  "textRecieve": "We need to register your phone number before \\n getting srated!",
+  "verifyphonenumber": "verify phone number",
+  "Editphonenumber": "Edit phone number?",
+  "Sendagain": "Send again",
+  "PhoneVerification": "Phone Verification",
+  "Send OTP": "Send OTP",
+  "Createnewpassword": "Create new password",
+  "PasswordCondition": "Your new password must be different from\\n previous used passwords.",
+  "passCondition": "Must be at least 8 characters.",
+  "Confirmpassword": "Confirm password",
+  "Confirm": "Confirm",
+  "Checkyourmail": "Check your mail",
+  "confirmCondition": "We have sent a password recover instructions to\\n your email.",
+  "Openemail": "Open email",
+  "emailLater": "i’ll confirm latter",
+  "Recently": "Recently",
+  "Searchanyproduct": "Search any product",
+  "myCondition": "You should accept and agree of the terms",
+  "passwordNotmatch": "Password not match",
+  "fillFields": "Please fill all the fields",
+  "enterVerification": "Please enter verification number",
+  "checkEmailPass": "Check  your email to reset password",
+  "enterEmail": "Please Enter your email address",
+  "Home": "Home",
+  "Buy": "Buy",
+  "Discovery": "Discovery",
+  "Star": "Star",
+  "Profile": "Profile",
+  "SaveChanges": "Save Changes",
+  "Arabic": "Arabic",
+  "English": "English",
+  "Language": "Language",
+  "ShoppingCart": "Shopping Cart",
+  "NoCards": "No Cards Yet \\n You can Add from Product Details",
+  "SubTotal": "SubTotal",
+  "Total": "Total",
+  "Discount": "Discount",
+  "Shipping": "Shipping",
+  "Proceedcheckout": "Proceed to checkout",
+  "Favorite": "Favorite",
+  "NoFavoritesYet ": "No Favorites Yet \\n You can Add from Home Tab",
+  "Explore": "Explore",
+  "BestSeller": "Best Seller",
+  "SeeAll": "See All",
+  "TopTrends": "Top Trends",
+  "Notification": "Notification",
+  "Scanner": "Scanner",
+  "Helpcenter": "Help center",
+  "About s": "About us",
+  "Settings": "Settings",
+  "OrderTracking": "Order Tracking",
+  "PaymentMethod": "Payment Method",
+  "Mypurches": "My purchess",
+  "Address": "Address",
+  "Privacy": "Privacy",
+  "Logout": "Log out",
+  "Alternatemobilenumberdetails": "Alternate mobile number details",
+  "Changepassword": "Change password",
+  "Edit": "Edit",
+  "PopularItem": "Popular Item",
+  "Search": "Search",
+  "Smartphone": "Smartphone",
+  "Specialfeatures": "Special features",
+  "AddToCart": "Add To Cart",
+  "Category": "Category",
+  "yourpassword": "your password",
+  "Thiswill": "This will help recover your account if needed",
+  "Addname": "Add a name that helps you identify alternate number",
+  "Inthespotlight": "In the spotlight",
+  "Explore now": "Explore now"
+};
+static const Map<String, Map<String,dynamic>> mapLocales = {"ar": ar, "en": en};
 }

@@ -1,8 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Components/TextFieldWidget.dart';
 import 'package:mobile_shop_app/Controller/AuthProvider.dart';
-import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,22 +29,22 @@ class sendOtpScreen extends StatelessWidget {
                 height: 44.h,
               ),
               Text(
-                'Phone Verification',
+                'PhoneVerification'.tr(),
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               Container(
                 margin: EdgeInsets.only(top: 16.h, bottom: 33.h),
                 child: Text(
-                  'We need to register your phone number before \ngetting srated!',
+                  'textRecieve'.tr(),
                   style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
                 ),
               ),
               TextFieldWidget(
                 controller: provider.phone,
-                  title: 'Phone number', bottom: 24.h, prefix: '', state: true),
+                  title: 'Phonenumber'.tr(), bottom: 24.h, prefix: '', state: true),
               ButtonWidget(
-                title: 'Send OTP',
+                title: 'Send OTP'.tr(),
                 color: green,
                 function: (){},
               )

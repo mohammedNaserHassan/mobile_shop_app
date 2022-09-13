@@ -1,8 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Controller/AuthProvider.dart';
-import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:mobile_shop_app/View/Auth/CreatePassScreen.dart';
@@ -42,26 +42,26 @@ class checkEmailScreen extends StatelessWidget {
                 height: 44.h,
               ),
               Text(
-                'Check your mail',
+                'Checkyourmail'.tr(),
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 25,fontWeight: FontWeight.bold),
               ),
               Container(
                 margin: EdgeInsets.only(top: 16.h, bottom: 33.h),
                 child: Text(
-                  'We have sent a password recover instructions to\n your email.',
+                  'confirmCondition'.tr(),
                   style: Theme.of(context).textTheme.subtitle1?.copyWith(color: Colors.grey,fontSize: 14),
                   textAlign: TextAlign.center,
                 ),
               ),
               ButtonWidget(
-                title: 'Open email',
+                title: 'Openemail'.tr(),
                 color: green,
                 function: provider.openEmail,
               ),
               SizedBox(height: 10.h,),
               ButtonWidget(
                 textColor:black,
-                title: 'i’ll confirm latter',
+                title: 'emailLater'.tr(),
                 color:  Color(0xffEBF5EA),
                 function: (){
                   AppRouter.appRouter.goWithReplacement(CreatePassScreen());
