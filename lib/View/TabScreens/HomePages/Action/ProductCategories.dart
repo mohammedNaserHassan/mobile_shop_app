@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mobile_shop_app/Components/MobileItemWidget.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
@@ -16,7 +17,7 @@ class ProductCategories extends StatelessWidget {
       builder: (context, provider, child) {
         return Scaffold(
           appBar: AppBar(
-            toolbarHeight: 100.h,
+            toolbarHeight: 80.h,
             automaticallyImplyLeading: false,
             centerTitle: true,
             title: Text(provider.nameProduct,
@@ -33,6 +34,16 @@ class ProductCategories extends StatelessWidget {
                 AppRouter.appRouter.back();
               },
             ),
+            actions: [
+              GestureDetector(
+              onTap: (){
+                AppRouter.appRouter.back();
+                provider.setIndex(1);
+              },
+              child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: SvgPicture.asset('Assets/Images/shope.svg')),
+            )],
           ),
           body: provider.productsCategories.length == 0
               ? Center(child: CircularProgressIndicator())
@@ -46,7 +57,7 @@ class ProductCategories extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.r),
                             image: DecorationImage(
                                 image: NetworkImage(
-                                  provider.ads,
+                                  provider.ads??'',
                                 ),
                                 fit: BoxFit.fill)),
                         margin: EdgeInsets.symmetric(

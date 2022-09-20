@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            toolbarHeight: 100.h,
+            toolbarHeight: 80.h,
             leading: IconButton(
               onPressed: () {
                 AppRouter.appRouter.back();
@@ -44,17 +44,33 @@ class ProfileScreen extends StatelessWidget {
                   onTap: () {
                     provider.selectFile();
                   },
-                  child: provider.file == null
-                      ? FadeInImage.assetNetwork(
-                    placeholder: 'Assets/Images/profile.png',
-                    image: provider.profileModel.data?.image?? 'Assets/Images/profile.png',
-                    fit: BoxFit.cover,
-                    height: 70.h,
+                  child:Stack(
+                    children: [
+                   Container(
+                     child:    provider.file == null
+                         ? FadeInImage.assetNetwork(
+                       placeholder: 'Assets/Images/profile.png',
+                       image: provider.profileModel.data?.image?? 'Assets/Images/profile.png',
+                       height: 80.h,
+                       fit: BoxFit.fill,
+                       width: 80.w,
+                     )
+                         : CircleAvatar(
+                       radius: 50.r,
+                       backgroundImage: FileImage(provider.file!),
+                     ),
+                   ),
+                      Container(
+                        width: 80.w,
+                        height: 80.h,
+                        color: white.withOpacity(0.5),
+                      ),
+                      PositionedDirectional(
+                        top: 30.h,
+                          start: 30.w,
+                          child: Icon(Icons.camera_alt,color: Colors.black87,))
+                    ],
                   )
-                      : CircleAvatar(
-                    radius: 50.r,
-                    backgroundImage: FileImage(provider.file!),
-                  ),
                 ),
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
@@ -65,13 +81,17 @@ class ProfileScreen extends StatelessWidget {
                 TextFieldWidget(title: '', prefix: '', bottom: 10.h, controller: provider.nameEdit),
                 TextFieldWidget(title: '', prefix: '', bottom: 10.h, controller: provider.emailEdit),
                 TextFieldWidget(title:  'yourpassword'.tr(), prefix: '', bottom: 0, controller: provider.passwordEdit),
-                Align(
-                  alignment: Alignment.center,
+                Container(
+                    margin: EdgeInsetsDirectional.only(end: 50.w,bottom: 10.h,top: 10.h),
                     child: Text('Alternatemobilenumberdetails'.tr(),style: Theme.of(context).textTheme.headline6?.copyWith(fontWeight: FontWeight.bold,fontSize: 16.sp),)),
-                TextFieldWidget(title:  '', prefix: '', bottom: 10.h, controller: provider.phoneEdit),
-                Text('Thiswill'.tr(),style: Theme.of(context).textTheme.bodySmall?.copyWith(color: grey)),
-                TextFieldWidget(title:  '', prefix: '', bottom: 10.h, controller: provider.nameEdit),
-                Text('Addname'.tr(),style: Theme.of(context).textTheme.bodySmall?.copyWith(color: grey),),
+                TextFieldWidget(title:  '', prefix: '', bottom: 5.h, controller: provider.phoneEdit),
+                Container(
+                    margin: EdgeInsetsDirectional.only(end: 60.w,bottom: 10.h),
+                    child: Text('Thiswill'.tr(),style: Theme.of(context).textTheme.bodySmall?.copyWith(color: grey))),
+                TextFieldWidget(title:  '', prefix: '', bottom: 5.h, controller: provider.nameEdit),
+                Container(
+                    margin: EdgeInsetsDirectional.only(end: 20.w,bottom: 10.h),
+                    child: Text('Addname'.tr(),style: Theme.of(context).textTheme.bodySmall?.copyWith(color: grey),)),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 20.h),
                   child: ButtonWidget(

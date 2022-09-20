@@ -2,8 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_shop_app/Components/ButtonWidget.dart';
 import 'package:mobile_shop_app/Controller/MobileProvider.dart';
+import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:mobile_shop_app/View/TabScreens/Profile/Action/ShippingAddressScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -275,7 +277,9 @@ class ShopTab extends StatelessWidget {
                           ButtonWidget(
                               title: 'Proceedcheckout'.tr(),
                               color: black,
-                              function: () {})
+                              function: () {
+                                AppRouter.appRouter.goToPage(ShippingAddressScreen());
+                              })
                         ],
                       ),
                     ),

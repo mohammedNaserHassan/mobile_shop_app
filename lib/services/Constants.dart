@@ -21,6 +21,11 @@ var SEARCH = 'products/search';
 var CATEGORIE = 'categories';
 var NOTIFICATION = 'notifications';
 var UPDATEPROFILE = 'update-profile';
+var Address = 'addresses';
+var SETTINGS = 'settings';
+var QUESTIONs = 'faqs';
+var COMPLAINTS = 'complaints';
+var ORDERS = 'orders';
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////Boards of Boarding Screen/////////////////////

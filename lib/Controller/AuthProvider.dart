@@ -10,7 +10,7 @@ import 'package:mobile_shop_app/Services/customDialog.dart';
 import 'package:mobile_shop_app/View/Auth/LoginScreen.dart';
 import 'package:mobile_shop_app/View/Auth/checkEmailScreen.dart';
 import 'package:mobile_shop_app/View/Auth/recieveOtpScreen.dart';
-import 'package:mobile_shop_app/View/HomeScreen.dart';
+import 'package:mobile_shop_app/View/Features/HomeScreen.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:provider/provider.dart';
 
@@ -249,6 +249,7 @@ class AuthProvider extends ChangeNotifier{
   logOut() async {
   final mobile =  Provider.of<MobileProvider>(AppRouter.appRouter.navkey.currentContext!,listen: false);
     isLoading = false;
+  mobile.setIndex(0);
     DioHelper.dioHelper.postData(
       url: LOGOUT,
       data: {'fcm_token': SharedPreferencesHelper.x.getName()},
@@ -256,12 +257,6 @@ class AuthProvider extends ChangeNotifier{
     SharedPreferencesHelper.x.removeVerify();
     SharedPreferencesHelper.x.removeName();
     AppRouter.appRouter.goWithReplacement(LoginScreen());
-  // mobile.cartsModels.clear();
-  // mobile.favoritesModels.clear();
-  // mobile.recentlyProducts.clear();
-  // mobile.products.clear();
-  // mobile.total =0;
-  // mobile.subTotal=0;
     notifyListeners();
   }
 

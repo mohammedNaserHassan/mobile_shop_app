@@ -75,9 +75,9 @@ class ProductDetails extends StatelessWidget {
                         ),
                       ),
                       PositionedDirectional(
-                          top: 20.h,
-                          end: 10.w,
-                          child: IconButton(onPressed: (){AppRouter.appRouter.back(); provider.setIndex(1);}, icon: Icon(Icons.shopping_cart_outlined,color: black,))),
+                          top: 30.h,
+                          end: 20.w,
+                          child: GestureDetector(onTap: (){AppRouter.appRouter.back(); provider.setIndex(1);},child: SvgPicture.asset('Assets/Icons/Buy.svg'),)),
                     ],
                   ),
                   CarouselIndicator(
@@ -123,7 +123,7 @@ class ProductDetails extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.h),
+                    margin: EdgeInsets.symmetric(horizontal: 20.w,vertical: 10.h),
                     child: Row(
                       children: [
                         Text('Smartphone'.tr()+' '),
@@ -137,42 +137,50 @@ class ProductDetails extends StatelessWidget {
                         alignment: AlignmentDirectional.centerStart,
                         child: Text('Specialfeatures'.tr(),style: Theme.of(context).textTheme.headline5,)),
                   ),
-                  SpetialFeatureWidget(),
-                  SpetialFeatureWidget(),
-                  SpetialFeatureWidget(),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Card(
-                      margin: EdgeInsets.zero,
-                      child: Container(
-                        color: Colors.white,
-                        height: 92.h,
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                provider.addOrRemoveFavourite(mobileModel.id ?? 0);
-                              },
-                              child: Container(
-                                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                                  decoration: BoxDecoration(
-                                    color: mobileModel.inFavorites ?? false
-                                        ? green
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  width: 44.w,
-                                  height: 44.h,
-                                  child: SvgPicture.asset('Assets/Icons/heart.svg')),
-                            ),
-                            ButtonWidget(
-                                title: 'AddToCart'.tr(),
-                                color: black,
-                                function: () {
-                                  provider.addOrRemoveCard(mobileModel.id ?? 0);
-                                }),
-                          ],
-                        ),
+                 SingleChildScrollView(
+                   child: SizedBox(
+                     height: 130.h,
+                     child: ListView(
+                       shrinkWrap: true,
+                       children: [
+                         Padding(
+                           padding:  EdgeInsets.all(20.0.w),
+                           child: Text(mobileModel.description??'',overflow: TextOverflow.visible,),
+                         ),
+                       ],
+                     ),
+                   ),
+                 ),
+                  Card(
+                    margin: EdgeInsets.zero,
+                    child: Container(
+                      color: Colors.white,
+                      height: 90.h,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              provider.addOrRemoveFavourite(mobileModel.id ?? 0);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10.w),
+                                decoration: BoxDecoration(
+                                  color: mobileModel.inFavorites ?? false
+                                      ? green
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                width: 44.w,
+                                height: 44.h,
+                                child: SvgPicture.asset('Assets/Icons/heart.svg')),
+                          ),
+                          ButtonWidget(
+                              title: 'AddToCart'.tr(),
+                              color: black,
+                              function: () {
+                                provider.addOrRemoveCard(mobileModel.id ?? 0);
+                              }),
+                        ],
                       ),
                     ),
                   ),

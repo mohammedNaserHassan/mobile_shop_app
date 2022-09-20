@@ -6,8 +6,8 @@ import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/AppRouter.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:mobile_shop_app/View/TabScreens/HomePages/Action/CategoryPage.dart';
-import 'package:mobile_shop_app/View/TabScreens/HomePages/Action/NotificationPage.dart';
 import 'package:mobile_shop_app/View/TabScreens/HomePages/Action/SearchPage.dart';
+import 'package:mobile_shop_app/View/TabScreens/Profile/Action/Settings/Action/NotificationPage.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -61,7 +61,7 @@ class HomeTab extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.r),
                       image: DecorationImage(
                           image: NetworkImage(
-                            provider.ads,
+                            provider.ads??'Assets/Images/banner2.png',
                           ),
                           fit: BoxFit.fill)),
                   margin:
@@ -71,9 +71,14 @@ class HomeTab extends StatelessWidget {
                   leading: Text('PopularItem'.tr(),
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                  trailing: Text(
-                    'SeeAll'.tr(),
-                    style: TextStyle(color: Colors.green),
+                  trailing: GestureDetector(
+                    onTap: (){
+                      AppRouter.appRouter.goToPage(CategoryPage());
+                    },
+                    child: Text(
+                      'SeeAll'.tr(),
+                      style: TextStyle(color: Colors.green),
+                    ),
                   ),
                 ),
                 GridView.builder(

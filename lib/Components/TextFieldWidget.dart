@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile_shop_app/Controller/AuthProvider.dart';
+import 'package:mobile_shop_app/Controller/MobileProvider.dart';
 import 'package:mobile_shop_app/Services/Constants.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,9 +18,10 @@ class TextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProvider>(
-      builder: (context,provider,index) {
+    return Consumer2<AuthProvider,MobileProvider>(
+      builder: (context,provider,mobile,index) {
         return Container(
+          alignment: Alignment.center,
           margin: EdgeInsets.only(bottom:bottom),
           width: 325.w,
           height: 60.h,
@@ -35,6 +37,9 @@ class TextFieldWidget extends StatelessWidget {
             ]
           ),
           child: TextField(
+            onChanged: (c){
+              mobile.setText(controller,c);
+            },
             textInputAction:TextInputAction.next ,
             keyboardType: type,
             obscureText:obscure ,

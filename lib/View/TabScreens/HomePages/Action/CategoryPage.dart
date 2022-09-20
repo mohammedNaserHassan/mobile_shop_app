@@ -25,7 +25,7 @@ class CategoryPage extends StatelessWidget {
       ),
       body: Consumer<MobileProvider>(
         builder: (context, provider, child) {
-          return Container(
+          return provider.categoriesModels.length==0?Center(child: CircularProgressIndicator()):Container(
             margin: EdgeInsets.only(top: 20.h),
             child: GridView.builder(
               padding:  EdgeInsets.symmetric(horizontal: 20.w),
